@@ -189,7 +189,7 @@ const Dashboard = () => {
                       <td data-label="Category">
                         <span className="table-category">{item.category}</span>
                       </td>
-                      <td>
+                      <td data-label="Location">
                         <span className="table-location">{item.location}</span>
                       </td>
                       <td data-label="Status">
