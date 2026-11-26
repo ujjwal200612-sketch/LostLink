@@ -1,0 +1,166 @@
+/* ==========================================================================
+   LostLink Design System & Global Styles
+   Premium Navy Blue, White, and Light Blue Theme
+   ========================================================================== */
+
+:root {
+  /* Brand Palette - Deep Navy, Vibrant Blue, and Light Blue */
+  --primary-navy: #0A2540;
+  --primary-navy-dark: #06182B;
+  --primary-navy-light: #123358;
+  
+  --accent-blue: #2563EB;
+  --accent-blue-hover: #1D4ED8;
+  --accent-blue-light: #3B82F6;
+  
+  --sky-blue: #38BDF8;
+  --sky-blue-light: #E0F2FE;
+  --sky-blue-border: #BAE6FD;
+  
+  --surface-white: #FFFFFF;
+  --surface-subtle: #F8FAFC;
+  --surface-card: #FFFFFF;
+  --surface-dark: #0F172A;
+
+  /* Text Colors */
+  --text-main: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+  --text-inverse: #FFFFFF;
+  --text-light: #94A3B8;
+
+  /* Status Colors */
+  --status-lost: #EF4444;
+  --status-lost-bg: #FEF2F2;
+  --status-lost-border: #FECACA;
+
+  --status-found: #10B981;
+  --status-found-bg: #ECFDF5;
+  --status-found-border: #A7F3D0;
+
+  --status-claimed: #F59E0B;
+  --status-claimed-bg: #FFFBEB;
+  --status-claimed-border: #FDE68A;
+
+  /* Borders & Shadows */
+  --border-light: #E2E8F0;
+  --border-subtle: #F1F5F9;
+  --border-focus: #38BDF8;
+
+  --shadow-xs: 0 1px 2px 0 rgba(10, 37, 64, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(10, 37, 64, 0.08), 0 1px 2px -1px rgba(10, 37, 64, 0.08);
+  --shadow-md: 0 4px 6px -1px rgba(10, 37, 64, 0.08), 0 2px 4px -2px rgba(10, 37, 64, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(10, 37, 64, 0.08), 0 4px 6px -4px rgba(10, 37, 64, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(10, 37, 64, 0.1), 0 8px 10px -6px rgba(10, 37, 64, 0.06);
+  --shadow-glow: 0 0 25px rgba(56, 189, 248, 0.35);
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--surface-subtle);
+  color: var(--text-main);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Utilities */
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section {
+  padding: 4.5rem 0;
+}
+
+.section-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--primary-navy);
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  max-width: 620px;
+  margin-top: 0.5rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius-full);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #38BDF8 0%, #2563EB 50%, #1D4ED8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

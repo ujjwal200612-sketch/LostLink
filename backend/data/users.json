@@ -1,0 +1,12 @@
+[
+  {
+    "id": "user_1795622771015",
+    "name": "Test User",
+    "email": "testuser@gmail.com",
+    "password": "$2b$10$opTff.FZFb.fDWCrjIE5WOiddoFKfI0Q92DwXFoZKr/iIiJpL39.S",
+    "phone": "9876543210",
+    "avatar": "",
+    "createdAt": "2026-11-25T16:06:11.015Z",
+    "updatedAt": "2026-11-25T16:06:11.015Z"
+  }
+]

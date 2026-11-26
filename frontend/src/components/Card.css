@@ -1,0 +1,30 @@
+.custom-card {
+  background-color: var(--surface-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+  overflow: hidden;
+}
+
+.custom-card-padding-none {
+  padding: 0;
+}
+
+.custom-card-padding-small {
+  padding: 1rem;
+}
+
+.custom-card-padding-normal {
+  padding: 1.5rem;
+}
+
+.custom-card-padding-large {
+  padding: 2rem;
+}
+
+.custom-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--sky-blue-border);
+}

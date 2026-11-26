@@ -1,0 +1,20 @@
+{
+  "name": "lostlink",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LostLink – Smart Lost and Found Platform",
+  "scripts": {
+    "server": "npm --prefix backend run dev",
+    "client": "npm --prefix frontend run dev",
+    "start": "npm --prefix backend start",
+    "build": "npm --prefix frontend run build"
+  },
+  "keywords": [
+    "lost-and-found",
+    "react",
+    "express",
+    "mongodb"
+  ],
+  "author": "",
+  "license": "ISC"
+}

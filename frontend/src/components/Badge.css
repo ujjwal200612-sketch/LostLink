@@ -1,0 +1,74 @@
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius-full);
+  line-height: 1;
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Sizes */
+.badge-size-sm {
+  padding: 0.2rem 0.5rem;
+  font-size: 0.68rem;
+}
+
+.badge-size-md {
+  padding: 0.3rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+/* Status variants */
+.badge-lost {
+  background-color: var(--status-lost-bg);
+  color: var(--status-lost);
+  border: 1px solid var(--status-lost-border);
+}
+.badge-lost .badge-dot {
+  background-color: var(--status-lost);
+}
+
+.badge-found {
+  background-color: var(--status-found-bg);
+  color: var(--status-found);
+  border: 1px solid var(--status-found-border);
+}
+.badge-found .badge-dot {
+  background-color: var(--status-found);
+}
+
+.badge-claimed {
+  background-color: var(--status-claimed-bg);
+  color: #D97706;
+  border: 1px solid var(--status-claimed-border);
+}
+.badge-claimed .badge-dot {
+  background-color: #D97706;
+}
+
+.badge-category {
+  background-color: var(--light-blue-bg);
+  color: var(--accent-blue);
+  border: 1px solid var(--sky-blue-border);
+}
+.badge-category .badge-dot {
+  background-color: var(--sky-blue);
+}
+
+.badge-default {
+  background-color: var(--surface-subtle);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+}
+.badge-default .badge-dot {
+  background-color: var(--text-muted);
+}
