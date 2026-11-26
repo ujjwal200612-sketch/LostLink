@@ -166,6 +166,8 @@ const createItem = async (req, res, next) => {
       contactPhone,
       reward,
       imageUrl,
+      imageData,
+      imageContentType,
     } = req.body;
 
     if (!title || !description || !type || !location) {
@@ -181,6 +183,10 @@ const createItem = async (req, res, next) => {
         message: 'Type must be lost or found',
       });
     }
+
+    const uploadedImageUrl = imageData
+      ? await uploadItemPhoto({ imageData, imageContentType, userId: req.user.id })
+      : (imageUrl || '');
 
     const { data, error } = await supabase
       .from('items')
