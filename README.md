@@ -2,117 +2,82 @@
 
 LostLink is a full-stack Lost and Found platform designed to reconnect communities, campuses, and organizations with misplaced belongings.
 
-It provides a centralized platform where users can report lost items, report found items, browse listings, search for belongings, and communicate with people who may have information about an item.
-
-Built with a modern navy-blue and white interface, LostLink aims to make the process of finding and returning misplaced belongings simple, accessible, and transparent.
+Users can report lost or found items, browse and search listings, filter by category, view item details, and send inquiries to report owners.
 
 ---
 
-## 🚀 Features
+## Features
 
-- **User Authentication** – User registration and login.
-- **Report Lost Items** – Create reports for misplaced belongings.
-- **Report Found Items** – List items that have been found.
-- **Browse Items** – Explore lost and found listings.
-- **Smart Search** – Search for items using keywords.
-- **Category Filtering** – Filter items by category and type.
-- **Item Details** – View information about reported belongings.
-- **Inquiry System** – Send messages regarding reported items.
-- **User Dashboard** – View reports, activity, and received inquiries.
-- **Responsive Design** – Clean interface for different screen sizes.
+- User registration and login with hashed passwords and JWT authentication
+- Report lost and found items
+- Upload item photos from a phone or computer
+- Browse, search, and filter item listings
+- View item details and contact information
+- Send and receive inquiries
+- User dashboard for reports and received inquiries
+- Responsive layout for desktop and mobile screens
 
----
+## Tech Stack
 
-## 🛠️ Tech Stack
+**Frontend:** React 18, Vite, React Router, Lucide React, HTML and CSS
 
-### Frontend
-- React.js
-- Vite
-- React Router DOM
-- Lucide React
-- HTML5 and CSS3
+**Backend:** Node.js, Express, JWT, bcryptjs
 
-### Backend
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose
-- JWT Authentication
-- bcryptjs
-- dotenv
-- CORS
+**Database and storage:** Supabase (PostgreSQL database and Supabase Storage for item photos)
+
+**Deployment:** Vercel (frontend) and Render (backend)
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```text
 LostLink/
-│
-├── frontend/
-│   ├── public/
-│   ├── src/
-│   │   ├── assets/
-│   │   ├── components/
-│   │   ├── context/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   ├── utils/
-│   │   ├── App.jsx
-│   │   ├── index.css
-│   │   └── main.jsx
-│   ├── package.json
-│   └── vite.config.js
-│
+├── frontend/       # React + Vite application
 ├── backend/
-│   ├── config/
+│   ├── config/     # Supabase configuration
 │   ├── controllers/
 │   ├── middleware/
-│   ├── models/
 │   ├── routes/
-│   ├── package.json
 │   └── server.js
-│
-├── .gitignore
 ├── package.json
 └── README.md
 ```
 
----
-
-## ⚡ Getting Started
+## Run Locally
 
 ### Prerequisites
 
-Install the following:
+- Node.js 18 or later
+- npm
+- A Supabase project
 
-- [Node.js](https://nodejs.org/) (v18 or higher)
-- [MongoDB](https://www.mongodb.com/) (local installation or MongoDB Atlas)
-- Git
-
-### 1. Clone the Repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/ujjwal200612-sketch/LostLink.git
 cd LostLink
 ```
 
-### 2. Backend Setup
+### 2. Configure the backend
 
 ```bash
 cd backend
 npm install
 ```
 
-Create a `.env` file inside the backend folder:
+Copy `.env.example` to `.env` and fill in the values from your Supabase project:
 
 ```env
 PORT=5000
 NODE_ENV=development
-MONGODB_URI=mongodb://127.0.0.1:27017/lostlink
-JWT_SECRET=replace_with_a_secure_secret
 CLIENT_URL=http://localhost:5173
+JWT_SECRET=use_a_long_random_secret
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_SECRET_KEY=your_supabase_secret_key
 ```
+
+Keep `.env` private. Never commit Supabase secret keys or production JWT secrets.
 
 Start the backend:
 
@@ -120,69 +85,62 @@ Start the backend:
 npm run dev
 ```
 
-The backend will run at:
+The API runs at `http://localhost:5000`.
 
-`http://localhost:5000`
+### 3. Configure and run the frontend
 
-### 3. Frontend Setup
-
-Open another terminal:
+In a second terminal:
 
 ```bash
 cd frontend
 npm install
+```
+
+Create `frontend/.env` with:
+
+```env
+VITE_API_URL=http://localhost:5000/api
+```
+
+Start the frontend:
+
+```bash
 npm run dev
 ```
 
-Open the application:
-
-`http://localhost:5173`
+Open `http://localhost:5173`.
 
 ---
 
-## 🔌 API Overview
+## API Overview
 
 | Method | Endpoint | Description |
 |---|---|---|
-| GET | `/api/health` | Check server and database status |
-| GET | `/api/items` | Retrieve items |
-| GET | `/api/items/recent` | Retrieve recent items |
-| GET | `/api/items/:id` | Retrieve item details |
-| POST | `/api/items` | Create an item report |
-| PUT | `/api/items/:id` | Update an item |
-| DELETE | `/api/items/:id` | Delete an item |
+| GET | `/api/health` | Check API and Supabase connectivity |
 | POST | `/api/auth/register` | Register a user |
-| POST | `/api/auth/login` | Log in a user |
-| GET | `/api/auth/profile` | Retrieve user profile |
+| POST | `/api/auth/login` | Log in |
+| GET | `/api/auth/profile` | Get the logged-in user's profile |
+| GET | `/api/items` | List and filter items |
+| GET | `/api/items/recent` | Get recent items |
+| GET | `/api/items/:id` | Get item details |
+| POST | `/api/items` | Create a lost/found report (authentication required) |
+| PUT | `/api/items/:id` | Update your report (authentication required) |
+| DELETE | `/api/items/:id` | Delete your report (authentication required) |
+| POST | `/api/items/:itemId/inquiries` | Send an inquiry (authentication required) |
+| GET | `/api/items/my/inquiries` | View inquiries on your reports (authentication required) |
 
 ---
 
-## 🎨 Design
+## Photo Uploads
 
-LostLink uses a modern and minimal visual identity.
+Item photos can be JPG, PNG, or WEBP files up to 5 MB. The backend uploads photos to the public Supabase Storage bucket named `item-images` and saves the resulting public URL with the item record. The backend needs a Supabase secret key with permission to manage Storage.
 
-- **Primary:** Deep Navy Blue
-- **Secondary:** Vibrant Blue
-- **Background:** Soft White and Light Slate
-- **Accents:** Light Blue
-- **Typography:** Modern, readable sans-serif fonts
+## Security Notes
 
-The interface is designed to provide a clean and user-friendly experience.
-
----
-
-## 🔒 Security
-
-- Password hashing using bcryptjs.
-- JWT-based authentication.
-- Environment variables for sensitive configuration.
-- `.env` files excluded from Git using `.gitignore`.
-
----
-
-## 📄 License
-
-This project is licensed under the ISC License.
+- Passwords are hashed with bcryptjs.
+- Protected API routes require a valid JWT bearer token.
+- Keep backend environment variables private.
+- The Supabase Storage bucket is public so item photos can be displayed without signing in. Do not upload sensitive or private images.
 
 ---
 
