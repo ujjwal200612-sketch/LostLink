@@ -165,3 +165,48 @@
   gap: 0.6rem;
   color: var(--accent-blue-hover);
 }
+
+/* Compact item cards on phones without changing the desktop layout */
+@media (max-width: 640px) {
+  .item-card-image-wrap {
+    height: 155px;
+  }
+
+  .item-card-content {
+    padding: 1rem;
+  }
+
+  .item-card-meta {
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.4rem;
+  }
+
+  .item-card-title {
+    font-size: 1.05rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .item-card-desc {
+    font-size: 0.85rem;
+    line-height: 1.45;
+    margin-bottom: 0.8rem;
+  }
+
+  .item-card-footer {
+    padding-top: 0.7rem;
+  }
+
+  .item-reward-chip {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.55rem;
+    bottom: 0.65rem;
+    right: 0.65rem;
+  }
+
+  .item-card-badges {
+    top: 0.65rem;
+    left: 0.65rem;
+  }
+}
+
