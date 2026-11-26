@@ -1,5 +1,43 @@
 const supabase = require('../config/supabase');
 
+// Upload item photos to Supabase Storage. The bucket is created on first use.
+const uploadItemPhoto = async ({ imageData, imageContentType, userId }) => {
+  if (!imageData) return '';
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+  if (!allowedTypes.includes(imageContentType)) {
+    throw new Error('Photo must be JPG, PNG, or WEBP.');
+  }
+
+  const base64 = imageData.replace(/^data:image\\/\\w+;base64,/, '');
+  const buffer = Buffer.from(base64, 'base64');
+  if (!buffer.length || buffer.length > 5 * 1024 * 1024) {
+    throw new Error('Photo must be smaller than 5 MB.');
+  }
+
+  const bucket = 'item-images';
+  const { error: bucketError } = await supabase.storage.createBucket(bucket, {
+    public: true,
+    fileSizeLimit: 5 * 1024 * 1024,
+    allowedMimeTypes: allowedTypes,
+  });
+  if (bucketError && !/already exists|duplicate/i.test(bucketError.message || '')) {
+    // A concurrent first upload may have created the bucket; verify before failing.
+    const { data: buckets, error: listError } = await supabase.storage.listBuckets();
+    if (listError || !buckets?.some((entry) => entry.name === bucket)) throw bucketError;
+  }
+
+  const extension = imageContentType.split('/')[1] === 'jpeg' ? 'jpg' : imageContentType.split('/')[1];
+  const filePath = `${userId}/${Date.now()}-${Math.random().toString(36).slice(2)}.${extension}`;
+  const { error: uploadError } = await supabase.storage.from(bucket).upload(filePath, buffer, {
+    contentType: imageContentType,
+    upsert: false,
+  });
+  if (uploadError) throw uploadError;
+
+  const { data } = supabase.storage.from(bucket).getPublicUrl(filePath);
+  return data.publicUrl;
+};
+
 // Convert Supabase database columns into frontend-friendly fields
 const formatItem = (item) => ({
   _id: item.id,
@@ -159,7 +197,7 @@ const createItem = async (req, res, next) => {
         contact_email: contactEmail || '',
         contact_phone: contactPhone || '',
         reward: Number(reward) || 0,
-        image_url: imageUrl || '',
+        image_url: uploadedImageUrl,
       })
       .select('*')
       .single();
