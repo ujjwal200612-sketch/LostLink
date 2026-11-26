@@ -19,6 +19,9 @@ import { useAuth } from '../context/useAuth';
 import { itemService } from '../services/api';
 import './Dashboard.css';
 
+const DEFAULT_ITEM_IMAGE =
+  'https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?auto=format&fit=crop&w=600&q=80';
+
 const Dashboard = () => {
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
@@ -162,9 +165,13 @@ const Dashboard = () => {
                       <td data-label="Item" className="item-name-cell">
                         <div className="table-thumb-wrap">
                           <img
-                            src={item.imageUrl}
+                            src={item.imageUrl || DEFAULT_ITEM_IMAGE}
                             alt={item.title}
                             className="table-thumb"
+                            onError={(event) => {
+                              event.currentTarget.onerror = null;
+                              event.currentTarget.src = DEFAULT_ITEM_IMAGE;
+                            }}
                           />
                           <div>
                             <div className="table-item-title">{item.title}</div>
