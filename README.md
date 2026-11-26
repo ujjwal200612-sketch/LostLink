@@ -1,26 +1,46 @@
 # LostLink – Smart Lost and Found Platform
 
-LostLink is a modern, full-stack lost and found platform built to reconnect communities, campuses, and organizations with misplaced items quickly, securely, and transparently.
+LostLink is a full-stack Lost and Found platform designed to reconnect communities, campuses, and organizations with misplaced belongings.
 
-Featuring a startup-grade UI themed with **premium navy blue, white, and light blue accents**, the application includes smart filtering, verified return mechanisms, real-time status tracking, and a decoupled architecture with React + Vite on the frontend and Express + MongoDB on the backend.
+It provides a centralized platform where users can report lost items, report found items, browse listings, search for belongings, and communicate with people who may have information about an item.
+
+Built with a modern navy-blue and white interface, LostLink aims to make the process of finding and returning misplaced belongings simple, accessible, and transparent.
 
 ---
 
-## 🚀 Tech Stack
+## 🚀 Features
+
+- **User Authentication** – User registration and login.
+- **Report Lost Items** – Create reports for misplaced belongings.
+- **Report Found Items** – List items that have been found.
+- **Browse Items** – Explore lost and found listings.
+- **Smart Search** – Search for items using keywords.
+- **Category Filtering** – Filter items by category and type.
+- **Item Details** – View information about reported belongings.
+- **Inquiry System** – Send messages regarding reported items.
+- **User Dashboard** – View reports, activity, and received inquiries.
+- **Responsive Design** – Clean interface for different screen sizes.
+
+---
+
+## 🛠️ Tech Stack
 
 ### Frontend
-- **React.js (v18+)** with **Vite** for ultra-fast bundling and Hot Module Replacement (HMR).
-- **React Router DOM (v6)** for client-side routing.
-- **Lucide React** for clean modern iconography.
-- **Modern CSS** with CSS Custom Properties, flexbox/grid layout, glassmorphic accents, and responsive typography.
+- React.js
+- Vite
+- React Router DOM
+- Lucide React
+- HTML5 and CSS3
 
 ### Backend
-- **Node.js** & **Express.js** REST API.
-- **MongoDB** with **Mongoose** object modeling.
-- **dotenv** for environment configuration.
-- **cors** for secure cross-origin resource sharing.
-- **bcryptjs** for secure password hashing.
-- **jsonwebtoken (JWT)** for stateless token-based authentication.
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT Authentication
+- bcryptjs
+- dotenv
+- CORS
 
 ---
 
@@ -28,171 +48,142 @@ Featuring a startup-grade UI themed with **premium navy blue, white, and light b
 
 ```text
 LostLink/
+│
 ├── frontend/
 │   ├── public/
-│   │   └── logo.svg
 │   ├── src/
 │   │   ├── assets/
-│   │   │   └── lostlink-logo.svg
 │   │   ├── components/
-│   │   │   ├── Badge.jsx & Badge.css
-│   │   │   ├── Button.jsx & Button.css
-│   │   │   ├── Card.jsx & Card.css
-│   │   │   ├── Footer.jsx & Footer.css
-│   │   │   ├── Input.jsx & Input.css
-│   │   │   ├── ItemCard.jsx & ItemCard.css
-│   │   │   ├── Navbar.jsx & Navbar.css
-│   │   │   └── StatCard.jsx & StatCard.css
 │   │   ├── context/
-│   │   │   └── AuthContext.jsx
 │   │   ├── pages/
-│   │   │   ├── Dashboard.jsx & Dashboard.css
-│   │   │   ├── Home.jsx & Home.css
-│   │   │   ├── ItemDetails.jsx & ItemDetails.css
-│   │   │   ├── Items.jsx & Items.css
-│   │   │   ├── Login.jsx & Login.css
-│   │   │   ├── NotFound.jsx & NotFound.css
-│   │   │   ├── Register.jsx & Register.css
-│   │   │   └── ReportItem.jsx & ReportItem.css
 │   │   ├── services/
-│   │   │   └── api.js
+│   │   ├── utils/
 │   │   ├── App.jsx
 │   │   ├── index.css
 │   │   └── main.jsx
-│   ├── index.html
 │   ├── package.json
 │   └── vite.config.js
 │
 ├── backend/
 │   ├── config/
-│   │   └── db.js
 │   ├── controllers/
-│   │   ├── authController.js
-│   │   └── itemController.js
 │   ├── middleware/
-│   │   ├── authMiddleware.js
-│   │   └── errorHandler.js
 │   ├── models/
-│   │   ├── Item.js
-│   │   └── User.js
 │   ├── routes/
-│   │   ├── authRoutes.js
-│   │   ├── healthRoutes.js
-│   │   └── itemRoutes.js
-│   ├── .env
-│   ├── .env.example
 │   ├── package.json
 │   └── server.js
 │
+├── .gitignore
 ├── package.json
 └── README.md
 ```
 
 ---
 
-## ⚡ Quick Start Guide
+## ⚡ Getting Started
 
 ### Prerequisites
-- [Node.js](https://nodejs.org/) (v18.0.0 or higher)
-- [MongoDB](https://www.mongodb.com/) (Local Community Server running on `mongodb://127.0.0.1:27017` or a MongoDB Atlas connection string)
 
----
+Install the following:
 
-### 1. Backend Setup
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- [MongoDB](https://www.mongodb.com/) (local installation or MongoDB Atlas)
+- Git
 
-Open a terminal and navigate to `backend/`:
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/ujjwal200612-sketch/LostLink.git
+cd LostLink
+```
+
+### 2. Backend Setup
 
 ```bash
 cd backend
 npm install
 ```
 
-Configure your environment variables in `backend/.env`:
+Create a `.env` file inside the backend folder:
+
 ```env
 PORT=5000
 NODE_ENV=development
 MONGODB_URI=mongodb://127.0.0.1:27017/lostlink
-JWT_SECRET=lostlink_super_secret_jwt_key_2026
+JWT_SECRET=replace_with_a_secure_secret
 CLIENT_URL=http://localhost:5173
 ```
 
-Start the backend server:
+Start the backend:
 
 ```bash
-# Development mode (with live watch)
 npm run dev
-
-# Or standard production start
-npm start
 ```
 
-The API will be live at: **`http://localhost:5000`**
-- Health status endpoint: `GET http://localhost:5000/api/health`
-- Items directory endpoint: `GET http://localhost:5000/api/items`
+The backend will run at:
 
-> **Note:** If MongoDB is offline or not installed yet, the server still boots safely and serves memory-backed demo data with a clear console notice, allowing uninterrupted frontend development.
+`http://localhost:5000`
 
----
+### 3. Frontend Setup
 
-### 2. Frontend Setup
-
-Open another terminal and navigate to `frontend/`:
+Open another terminal:
 
 ```bash
 cd frontend
 npm install
-```
-
-Start the development server:
-
-```bash
 npm run dev
 ```
 
-Open your browser at: **`http://localhost:5173`**
+Open the application:
 
-To produce an optimized production build:
-```bash
-npm run build
-```
+`http://localhost:5173`
 
 ---
 
-### 3. Root Level Convenience Commands
+## 🔌 API Overview
 
-From the root `LostLink/` directory, you can also run:
-
-- `npm run server` – Launches the backend in dev watch mode.
-- `npm run client` – Launches the frontend Vite dev server.
-- `npm run build` – Builds the production frontend bundle.
-
----
-
-## 🔌 API Endpoints Summary
-
-| Method | Endpoint | Description | Auth Required |
-| :--- | :--- | :--- | :--- |
-| `GET` | `/api/health` | Service uptime and MongoDB connection state | No |
-| `GET` | `/api/items` | List items with filters (`type`, `category`, `search`) | No |
-| `GET` | `/api/items/recent` | Recent 6 items for home showcase | No |
-| `GET` | `/api/items/:id` | Get details for an item by ID | No |
-| `POST` | `/api/items` | Submit a new lost or found notice | Optional |
-| `PUT` | `/api/items/:id` | Update an existing item notice | Optional |
-| `DELETE` | `/api/items/:id` | Remove an item notice | Optional |
-| `POST` | `/api/auth/register` | Register a new user | No |
-| `POST` | `/api/auth/login` | Authenticate and obtain JWT token | No |
-| `GET` | `/api/auth/profile` | Retrieve authenticated user profile | Yes (Bearer) |
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/health` | Check server and database status |
+| GET | `/api/items` | Retrieve items |
+| GET | `/api/items/recent` | Retrieve recent items |
+| GET | `/api/items/:id` | Retrieve item details |
+| POST | `/api/items` | Create an item report |
+| PUT | `/api/items/:id` | Update an item |
+| DELETE | `/api/items/:id` | Delete an item |
+| POST | `/api/auth/register` | Register a user |
+| POST | `/api/auth/login` | Log in a user |
+| GET | `/api/auth/profile` | Retrieve user profile |
 
 ---
 
-## 🎨 Design Direction
+## 🎨 Design
 
-- **Primary Colors:** Deep Navy (`#0A2540`, `#06182B`), Vibrant Blue (`#2563EB`), Electric Light Sky Blue (`#38BDF8`).
-- **Surfaces & Accents:** Clean White (`#FFFFFF`), Soft Slate Background (`#F8FAFC`), Ice Blue Accents (`#E0F2FE`).
-- **Status Indicators:** Red pill for Lost items (`#EF4444`), Emerald pill for Found items (`#10B981`), Amber pill for Claimed items (`#F59E0B`).
-- **Typography:** Plus Jakarta Sans & Inter with fluid scales and clear visual hierarchy.
+LostLink uses a modern and minimal visual identity.
+
+- **Primary:** Deep Navy Blue
+- **Secondary:** Vibrant Blue
+- **Background:** Soft White and Light Slate
+- **Accents:** Light Blue
+- **Typography:** Modern, readable sans-serif fonts
+
+The interface is designed to provide a clean and user-friendly experience.
+
+---
+
+## 🔒 Security
+
+- Password hashing using bcryptjs.
+- JWT-based authentication.
+- Environment variables for sensitive configuration.
+- `.env` files excluded from Git using `.gitignore`.
 
 ---
 
 ## 📄 License
-ISC License. Built for CSIT Lost & Found application development.
+
+This project is licensed under the ISC License.
+
+---
+
+**LostLink – Helping lost belongings find their way home.**
