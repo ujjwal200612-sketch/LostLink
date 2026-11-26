@@ -53,6 +53,8 @@ const ReportItem = () => {
     contactPhone: user?.phone || '',
   });
 
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -61,6 +63,32 @@ const ReportItem = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      setError('Choose a JPG, PNG, or WEBP image.');
+      e.target.value = '';
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setError('Photo must be smaller than 5 MB.');
+      e.target.value = '';
+      return;
+    }
+    setError('');
+    setSelectedImage(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
+  const fileToBase64 = (file) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(new Error('Could not read the selected photo.'));
+    reader.readAsDataURL(file);
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -92,8 +120,12 @@ const ReportItem = () => {
 
     setLoading(true);
     try {
+      const imageData = selectedImage ? await fileToBase64(selectedImage) : '';
       await itemService.createItem({
         ...formData,
+        imageUrl: '',
+        imageData,
+        imageContentType: selectedImage?.type || '',
         type,
         reward: Number(formData.reward) || 0,
       });
@@ -225,15 +257,25 @@ const ReportItem = () => {
             />
 
             <div className="form-row">
-              <Input
-                label="Photo Image URL (Optional)"
-                name="imageUrl"
-                placeholder="https://images.unsplash.com/photo-..."
-                value={formData.imageUrl}
-                onChange={handleChange}
-                icon={Image}
-                helperText="Leave empty to use a default high-quality category placeholder."
-              />
+              <div className="form-group">
+                <label className="form-label" htmlFor="item-photo">Item Photo (Optional)</label>
+                <input
+                  id="item-photo"
+                  name="itemPhoto"
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  onChange={handleImageChange}
+                  className="form-input"
+                />
+                <small className="form-helper-text">Upload a real photo of the item (JPG, PNG or WEBP; max 5 MB).</small>
+                {imagePreview && (
+                  <img
+                    src={imagePreview}
+                    alt="Selected item preview"
+                    style={{ display: 'block', width: '100%', maxWidth: '240px', maxHeight: '180px', objectFit: 'cover', borderRadius: '12px', marginTop: '12px' }}
+                  />
+                )}
+              </div>
 
               {type === 'lost' && (
                 <Input
