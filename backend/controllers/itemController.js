@@ -8,7 +8,7 @@ const uploadItemPhoto = async ({ imageData, imageContentType, userId }) => {
     throw new Error('Photo must be JPG, PNG, or WEBP.');
   }
 
-  const base64 = imageData.replace(/^data:image\\/\\w+;base64,/, '');
+  const base64 = imageData.includes(',') ? imageData.split(',').pop() : imageData;
   const buffer = Buffer.from(base64, 'base64');
   if (!buffer.length || buffer.length > 5 * 1024 * 1024) {
     throw new Error('Photo must be smaller than 5 MB.');
