@@ -124,6 +124,27 @@ const getRecentItems = async (req, res, next) => {
   }
 };
 
+// GET reports submitted by the logged-in user
+const getMyReports = async (req, res, next) => {
+  try {
+    const { data, error } = await supabase
+      .from('items')
+      .select('*')
+      .eq('user_id', req.user.id)
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+
+    res.json({
+      success: true,
+      count: data.length,
+      items: data.map(formatItem),
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // GET one item
 const getItemById = async (req, res, next) => {
   try {
@@ -372,6 +393,7 @@ const getMyInquiries = async (req, res, next) => {
 module.exports = {
   getItems,
   getRecentItems,
+  getMyReports,
   getItemById,
   createItem,
   updateItem,

@@ -114,20 +114,24 @@ Open `http://localhost:5173`.
 
 ## API Overview
 
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/health` | Check API and Supabase connectivity |
-| POST | `/api/auth/register` | Register a user |
-| POST | `/api/auth/login` | Log in |
-| GET | `/api/auth/profile` | Get the logged-in user's profile |
-| GET | `/api/items` | List and filter items |
-| GET | `/api/items/recent` | Get recent items |
-| GET | `/api/items/:id` | Get item details |
-| POST | `/api/items` | Create a lost/found report (authentication required) |
-| PUT | `/api/items/:id` | Update your report (authentication required) |
-| DELETE | `/api/items/:id` | Delete your report (authentication required) |
-| POST | `/api/items/:itemId/inquiries` | Send an inquiry (authentication required) |
-| GET | `/api/items/my/inquiries` | View inquiries on your reports (authentication required) |
+| Method | Endpoint                       | Description                                              |
+| ------ | ------------------------------ | -------------------------------------------------------- |
+| GET    | `/api/health`                  | Check API and Supabase connectivity                      |
+| GET    | `/api/items`                   | Retrieve items                                           |
+| GET    | `/api/items/recent`            | Retrieve recent items                                    |
+| GET    | `/api/items/my/reports`        | Retrieve reports submitted by the authenticated user     |
+| GET    | `/api/items/:id`               | Retrieve item details                                    |
+| POST   | `/api/items`                   | Create an item report                                    |
+| PUT    | `/api/items/:id`               | Update an item                                           |
+| DELETE | `/api/items/:id`               | Delete an item                                           |
+| POST   | `/api/auth/register`           | Register a user                                          |
+| POST   | `/api/auth/login`              | Log in                                                   |
+| GET    | `/api/auth/profile`            | Get the logged-in user's profile                         |
+| POST   | `/api/items`                   | Create a lost/found report (authentication required)     |
+| PUT    | `/api/items/:id`               | Update your report (authentication required)             |
+| DELETE | `/api/items/:id`               | Delete your report (authentication required)             |
+| POST   | `/api/items/:itemId/inquiries` | Send an inquiry (authentication required)                |
+| GET    | `/api/items/my/inquiries`      | View inquiries on your reports (authentication required) |
 
 ---
 

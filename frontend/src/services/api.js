@@ -228,6 +228,13 @@ export const itemService = {
     return await request('/items/my/inquiries');
   },
 
+  async getMyReports() {
+    const response = await request('/items/my/reports');
+    if (!Array.isArray(response.items)) {
+      throw new Error('Invalid reports response');
+    }
+    return response;
+  },
 
   async updateItem(id, itemData) {
     return request(`/items/${id}`, {

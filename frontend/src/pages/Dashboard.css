@@ -94,6 +94,19 @@
   background: var(--surface-white);
 }
 
+.dashboard-metric-link {
+  display: block;
+  min-width: 0;
+  border-radius: var(--radius-lg);
+  color: inherit;
+  cursor: pointer;
+}
+
+.dashboard-metric-link:focus-visible {
+  outline: 3px solid var(--border-focus);
+  outline-offset: 3px;
+}
+
 .metric-icon-wrap {
   width: 44px;
   height: 44px;
@@ -155,6 +168,17 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
   overflow: hidden;
+}
+
+.dashboard-reports-error,
+.dashboard-empty-reports {
+  padding: 1.5rem;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.dashboard-reports-error {
+  color: var(--status-lost);
 }
 
 .table-responsive {

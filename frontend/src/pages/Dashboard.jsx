@@ -21,6 +21,7 @@ import './Dashboard.css';
 
 const DEFAULT_ITEM_IMAGE =
   'https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?auto=format&fit=crop&w=600&q=80';
+const isReunited = (status) => ['resolved', 'reunited'].includes(status?.toLowerCase());
 
 const Dashboard = () => {
   const { user, isAuthenticated, logout } = useAuth();
@@ -28,22 +29,32 @@ const Dashboard = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [inquiries, setInquiries] = useState([]);
+  const [reportsError, setReportsError] = useState('');
 
   useEffect(() => {
+    if (!isAuthenticated) {
+      setItems([]);
+      setInquiries([]);
+      setReportsError('');
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
+    setReportsError('');
     itemService
-      .getItems()
-      .then((res) => {
-        setItems(res.items || []);
+      .getMyReports()
+      .then((res) => setItems(res.items))
+      .catch((err) => {
+        console.error('Error loading your reports:', err);
+        setReportsError('Your reports could not be loaded. Please try again later.');
       })
-      .catch((err) => console.error(err))
       .finally(() => setLoading(false));
     itemService
       .getMyInquiries()
-      .then((res) => {
-        setInquiries(res.inquiries || []);
-      })
+      .then((res) => setInquiries(res.inquiries || []))
       .catch((err) => console.error('Error loading inquiries:', err));
-  }, []);
+  }, [isAuthenticated]);
 
   const handleLogout = () => {
     logout();
@@ -96,25 +107,29 @@ const Dashboard = () => {
 
         {/* Quick Stats Grid */}
         <div className="dashboard-metrics-grid">
-          <Card padding="normal" className="metric-box">
-            <div className="metric-icon-wrap blue">
-              <Package size={22} />
-            </div>
-            <div className="metric-num">
-              {items.filter(item => item.status?.toLowerCase() === 'open').length}
-            </div>
-            <div className="metric-title">Active Reports</div>
-          </Card>
+          <Link to="/dashboard/reports/active" className="dashboard-metric-link" aria-label="View all active reports">
+            <Card padding="normal" hoverable className="metric-box">
+              <div className="metric-icon-wrap blue">
+                <Package size={22} />
+              </div>
+              <div className="metric-num">
+                {loading || reportsError ? '—' : items.filter(item => item.status?.toLowerCase() === 'open').length}
+              </div>
+              <div className="metric-title">Active Reports</div>
+            </Card>
+          </Link>
 
-          <Card padding="normal" className="metric-box">
-            <div className="metric-icon-wrap green">
-              <CheckCircle size={22} />
-            </div>
-            <div className="metric-num">
-              {items.filter(item => item.status?.toLowerCase() === 'reunited').length}
-            </div>
-            <div className="metric-title">Items Reunited</div>
-          </Card>
+          <Link to="/dashboard/reports/reunited" className="dashboard-metric-link" aria-label="View all reunited items">
+            <Card padding="normal" hoverable className="metric-box">
+              <div className="metric-icon-wrap green">
+                <CheckCircle size={22} />
+              </div>
+              <div className="metric-num">
+                {loading || reportsError ? '—' : items.filter(item => isReunited(item.status)).length}
+              </div>
+              <div className="metric-title">Items Reunited</div>
+            </Card>
+          </Link>
 
           <Card
             padding="normal"
@@ -147,68 +162,70 @@ const Dashboard = () => {
           </div>
         ) : (
           <div className="user-items-table-card">
-            <div className="table-responsive">
-              <table className="user-items-table">
-                <thead>
-                  <tr>
-                    <th>Item</th>
-                    <th>Type</th>
-                    <th>Category</th>
-                    <th>Location</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {items.slice(0, 4).map((item) => (
-                    <tr key={item._id}>
-                      <td data-label="Item" className="item-name-cell">
-                        <div className="table-thumb-wrap">
-                          <img
-                            src={item.imageUrl || DEFAULT_ITEM_IMAGE}
-                            alt={item.title}
-                            className="table-thumb"
-                            onError={(event) => {
-                              event.currentTarget.onerror = null;
-                              event.currentTarget.src = DEFAULT_ITEM_IMAGE;
-                            }}
-                          />
-                          <div>
-                            <div className="table-item-title">{item.title}</div>
-                            <div className="table-item-sub">
-                              {formatDateDDMMYYYY(item.dateOccurred)}
+            {reportsError ? (
+              <p className="dashboard-reports-error" role="alert">{reportsError}</p>
+            ) : items.length === 0 ? (
+              <p className="dashboard-empty-reports">You have not submitted any reports yet.</p>
+            ) : (
+              <div className="table-responsive">
+                <table className="user-items-table">
+                  <thead>
+                    <tr>
+                      <th>Item</th>
+                      <th>Type</th>
+                      <th>Category</th>
+                      <th>Location</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {items.slice(0, 4).map((item) => (
+                      <tr key={item._id}>
+                        <td data-label="Item" className="item-name-cell">
+                          <div className="table-thumb-wrap">
+                            <img
+                              src={item.imageUrl}
+                              alt={item.title}
+                              className="table-thumb"
+                            />
+                            <div>
+                              <div className="table-item-title">{item.title}</div>
+                              <div className="table-item-sub">
+                                {formatDateDDMMYYYY(item.dateOccurred)}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </td>
-                      <td data-label="Type">
-                        <Badge type={item.type === 'lost' ? 'lost' : 'found'} size="sm">
-                          {item.type}
-                        </Badge>
-                      </td>
-                      <td data-label="Category">
-                        <span className="table-category">{item.category}</span>
-                      </td>
-                      <td data-label="Location">
-                        <span className="table-location">{item.location}</span>
-                      </td>
-                      <td data-label="Status">
-                        <span className={`status-pill ${item.status}`}>
-                          {item.status}
-                        </span>
-                      </td>
-                      <td data-label="Action">
-                        <Link to={`/items/${item._id}`}>
-                          <Button variant="outline" size="sm">
-                            View
-                          </Button>
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                        </td>
+                        <td data-label="Type">
+                          <Badge type={item.type === 'lost' ? 'lost' : 'found'} size="sm">
+                            {item.type}
+                          </Badge>
+                        </td>
+                        <td data-label="Category">
+                          <span className="table-category">{item.category}</span>
+                        </td>
+                        <td>
+                          <span className="table-location">{item.location}</span>
+                        </td>
+                        <td data-label="Status">
+                          <span className={`status-pill ${item.status}`}>
+                            {item.status}
+                          </span>
+                        </td>
+                        <td data-label="Action">
+                          <Link to={`/items/${item._id}`}>
+                            <Button variant="outline" size="sm">
+                              View
+                            </Button>
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         )}
         {/* Received Inquiries */}

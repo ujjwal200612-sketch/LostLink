@@ -3,6 +3,7 @@ const express = require('express');
 const {
   getItems,
   getRecentItems,
+  getMyReports,
   getItemById,
   createItem,
   updateItem,
@@ -18,6 +19,8 @@ const router = express.Router();
 // Public routes
 router.get('/', getItems);
 router.get('/recent', getRecentItems);
+router.get('/my/reports', protect, getMyReports);
+router.get('/my/inquiries', protect, getMyInquiries);
 router.get('/:id', getItemById);
 
 // Protected routes
@@ -25,6 +28,5 @@ router.post('/', protect, createItem);
 router.put('/:id', protect, updateItem);
 router.delete('/:id', protect, deleteItem);
 router.post('/:itemId/inquiries', protect, createInquiry);
-router.get('/my/inquiries', protect, getMyInquiries);
 
 module.exports = router;

@@ -9,6 +9,7 @@ import ReportItem from './pages/ReportItem';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import MyReports from './pages/MyReports';
 import NotFound from './pages/NotFound';
 
 // Scroll to top helper
@@ -36,6 +37,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/reports/active" element={<MyReports type="active" />} />
+          <Route path="/dashboard/reports/reunited" element={<MyReports type="reunited" />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
