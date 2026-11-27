@@ -185,9 +185,16 @@ const Dashboard = () => {
                         <td data-label="Item" className="item-name-cell">
                           <div className="table-thumb-wrap">
                             <img
-                              src={item.imageUrl}
+                              src={item.imageUrl || DEFAULT_ITEM_IMAGE}
                               alt={item.title}
                               className="table-thumb"
+                              onError={(event) => {
+                                if (event.currentTarget.src !== DEFAULT_ITEM_IMAGE) {
+                                  event.currentTarget.src = DEFAULT_ITEM_IMAGE;
+                                } else {
+                                  event.currentTarget.style.visibility = 'hidden';
+                                }
+                              }}
                             />
                             <div>
                               <div className="table-item-title">{item.title}</div>
