@@ -59,7 +59,7 @@ const Footer = () => {
           <div className="footer-status-pill">
             <span className={`status-indicator-dot ${backendStatus}`} />
             <span className="status-indicator-text">
-              {backendStatus === 'connected' && 'API & MongoDB Connected'}
+              {backendStatus === 'connected' && 'API & Supabase Connected'}
               {backendStatus === 'mock' && 'Running in Preview Mode'}
               {backendStatus === 'checking' && 'Connecting to Backend...'}
               {backendStatus === 'degraded' && 'Backend Service Degraded'}
@@ -197,7 +197,7 @@ const Footer = () => {
           </div>
 
           <div className="footer-tech-stack">
-            <span>React</span> • <span>Vite</span> • <span>Node.js</span> • <span>MongoDB</span>
+            <span>React</span> • <span>Vite</span> • <span>Node.js</span> • <span>Supabase</span>
           </div>
         </div>
       </div>
